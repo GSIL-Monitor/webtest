@@ -3,6 +3,7 @@ package com.laiang.client;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.laiang.consts.ClientConst;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -34,8 +35,8 @@ public class HttpClientTest {
         map.put("ownerWorkId", null);
         map.put("pageNum", 1);
         map.put("pageSize", 200);
-        map.put("platformId", 38);
-        String result = doPost("http://auth.meili-inc.com/auth/permission/query", map);
+        map.put("platformId", ClientConst.PLATFORMID);
+        String result = doPost(ClientConst.QUERYURL, map);
 
         JSONObject obj = JSON.parseObject(result);
         JSONArray array = obj.getJSONObject("data").getJSONArray("list");
@@ -46,10 +47,10 @@ public class HttpClientTest {
                 mapto.put("description", item.getString("description"));
                 mapto.put("id", item.getLong("id"));
                 mapto.put("name", item.getString("name"));
-                mapto.put("ownerWorkId", "00222");
-                mapto.put("platformId", "38");
+                mapto.put("ownerWorkId", ClientConst.OWNERWORKID);
+                mapto.put("platformId", ClientConst.PLATFORMID);
                 mapto.put("value", item.getString("value"));
-                doPost("http://auth.meili-inc.com/auth/permission/update", mapto);
+                doPost(ClientConst.UPDATEURL, mapto);
         }
         System.out.println(result);
     }
@@ -121,7 +122,7 @@ public class HttpClientTest {
         // 设置请求头
         httpPost.addHeader("Content-Encoding", "gzip");
         httpPost.addHeader("Content-Type", "application/json;charset=UTF-8");
-        httpPost.addHeader("Cookie", "MTGK=TGK-3133-tl5DLmmHDgD2ejHDLderMs56cytoJC6HDow; _mf=ihCB-VPUT2GRfxLRC-teNw; JSESSIONID=047557CB59A23192D37CA4FF42F1B65F");
+        httpPost.addHeader("Cookie", ClientConst.COOKIES);
         httpPost.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36");
         httpPost.addHeader("X-Requested-With", "XMLHttpRequest");
 
